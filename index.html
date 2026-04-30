@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>can I see the sun smiling ☀️</title>
+<title>Can I see the sun smiling?? ☀️</title>
 
 <style>
 body {
@@ -39,37 +39,39 @@ h2 {
   margin-bottom: 25px;
 }
 
-/* Button Area */
+/* Button Area (NOW FLEX ROW) */
 .buttons {
   position: relative;
   width: 100%;
   height: 180px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
-/* Buttons */
+/* Buttons (BIGGER) */
 button {
   border: none;
-  padding: 14px 22px;
-  border-radius: 26px;
+  padding: 18px 30px;
+  border-radius: 30px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 16px;
   transition: all 0.25s ease;
 }
 
-/* Yes Button */
+/* YES */
 #yesBtn {
   background: #ff7aa2;
   color: white;
   position: relative;
 }
 
-/* No Button */
+/* NO */
 #noBtn {
   background: #e0e0e0;
-  position: absolute;
-  top: 80px;
-  left: 320px;
-  transition: all 0.15s ease;
+  position: relative;
 }
 
 /* Final Scene */
@@ -136,11 +138,10 @@ const yesTexts = [
 function runAway() {
   const noBtn = document.getElementById("noBtn");
 
-  const x = Math.random() * 360;
-  const y = Math.random() * 150;
+  const x = (Math.random() - 0.5) * 250;
+  const y = (Math.random() - 0.5) * 120;
 
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
+  noBtn.style.transform = `translate(${x}px, ${y}px) scale(0.85)`;
 }
 
 function yesClick() {
