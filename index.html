@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Message for Unc 🐱</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #ffd6e7, #fff0f5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.phone {
+  width: 320px;
+  height: 600px;
+  background: #fff;
+  border-radius: 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  background: #ff7aa2;
+  color: white;
+  padding: 15px;
+  font-weight: bold;
+}
+
+.chat {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.bubble {
+  background: #ffe4ec;
+  padding: 10px 15px;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  max-width: 80%;
+}
+
+.button-area {
+  padding: 10px;
+  text-align: center;
+}
+
+button {
+  background: #ff7aa2;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ff5c8a;
+}
+
+.cat {
+  width: 100%;
+  border-radius: 15px;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+  <div class="header">Unc 🐱</div>
+
+  <div class="chat" id="chat">
+    <div class="bubble">hey unc 🐾</div>
+  </div>
+
+  <div class="button-area">
+    <button onclick="sendMessage()">what’s up?</button>
+  </div>
+</div>
+
+<script>
+const messages = [
+  "how’s my favorite human doing today? 🐱",
+  "be honest… did you miss me a little? 👀",
+  "sending you soft cat energy rn 🐾",
+  "i feel like you need a hug… so here 🫂",
+  "important: you’re kinda my favorite person 😌",
+  "if you were a cat, i'd keep you forever 🐱"
+];
+
+function typeMessage(text) {
+  const chat = document.getElementById("chat");
+
+  let bubble = document.createElement("div");
+  bubble.className = "bubble";
+  chat.appendChild(bubble);
+
+  let i = 0;
+  let speed = 30;
+
+  function typing() {
+    if (i < text.length) {
+      bubble.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, speed);
+    } else {
+      addCat();
+    }
+  }
+
+  typing();
+}
+
+function addCat() {
+  const chat = document.getElementById("chat");
+
+  let img = document.createElement("img");
+  img.src = "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif";
+  img.className = "cat";
+
+  chat.appendChild(img);
+}
+
+function sendMessage() {
+  const random = messages[Math.floor(Math.random() * messages.length)];
+  typeMessage(random);
+}
+</script>
+
+</body>
+</html>
