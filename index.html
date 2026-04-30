@@ -79,7 +79,7 @@ button:hover {
   <div class="header">Unc 🐱</div>
 
   <div class="chat" id="chat">
-    <div class="bubble">hey unc 🐾</div>
+    <div class="bubble">👀</div>
   </div>
 
   <div class="button-area">
@@ -91,10 +91,8 @@ button:hover {
 const messages = [
   "how’s my favorite human doing today? 🐱",
   "be honest… did you miss me a little? 👀",
-  "sending you soft cat energy rn 🐾",
   "i feel like you need a hug… so here 🫂",
   "important: you’re kinda my favorite person 😌",
-  "if you were a cat, i'd keep you forever 🐱"
 ];
 
 function typeMessage(text) {
@@ -105,13 +103,12 @@ function typeMessage(text) {
   chat.appendChild(bubble);
 
   let i = 0;
-  let speed = 30;
 
   function typing() {
     if (i < text.length) {
       bubble.innerHTML += text.charAt(i);
       i++;
-      setTimeout(typing, speed);
+      setTimeout(typing, 30);
     } else {
       addCat();
     }
@@ -123,11 +120,19 @@ function typeMessage(text) {
 function addCat() {
   const chat = document.getElementById("chat");
 
-  let img = document.createElement("img");
-  img.src = "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif";
-  img.className = "cat";
+  const gifs = [
+    "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
+    "https://media.giphy.com/media/6hKL8BI8rRNrMRFtAx/giphy.gif",
+    "https://media.giphy.com/media/OHRF8LZis06OiPDJby/giphy.gif",
+    "https://media.giphy.com/media/Lz6971fkGSgCMOOncl/giphy.gif"
+  ];
 
-  chat.appendChild(img);
+  gifs.forEach(src => {
+    let img = document.createElement("img");
+    img.src = src;
+    img.className = "cat";
+    chat.appendChild(img);
+  });
 }
 
 function sendMessage() {
