@@ -2,25 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Sun Smile ☀️</title>
+<title>can I see the sun smiling ☀️</title>
 
 <style>
 body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
-  background: linear-gradient(135deg, #ffe3f1, #fff7e6);
+  background: radial-gradient(circle at top, #fff3d6, #ffd6e7);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
+/* Main Card */
 .card {
-  width: 360px;
-  height: 640px;
-  background: white;
-  border-radius: 30px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  width: 540px;
+  height: 420px;
+  background: #ffffff;
+  border-radius: 28px;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.18);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,49 +29,74 @@ body {
   position: relative;
   overflow: hidden;
   text-align: center;
-  padding: 20px;
+  padding: 25px;
 }
 
+/* Question */
 h2 {
-  font-size: 18px;
-  margin-bottom: 30px;
+  font-size: 22px;
   color: #444;
+  margin-bottom: 25px;
 }
 
+/* Button Area */
 .buttons {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 180px;
 }
 
+/* Buttons */
 button {
   border: none;
-  padding: 12px 18px;
-  border-radius: 20px;
+  padding: 14px 22px;
+  border-radius: 26px;
   cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s ease;
+  font-size: 15px;
+  transition: all 0.25s ease;
 }
 
+/* Yes Button */
 #yesBtn {
   background: #ff7aa2;
   color: white;
   position: relative;
-  z-index: 2;
 }
 
+/* No Button */
 #noBtn {
-  background: #ddd;
+  background: #e0e0e0;
   position: absolute;
   top: 80px;
-  left: 200px;
+  left: 320px;
+  transition: all 0.15s ease;
 }
 
+/* Final Scene */
 .final {
   display: none;
-  font-size: 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.final h1 {
   color: #ff7aa2;
-  font-weight: bold;
+  font-size: 26px;
+  margin: 0;
+}
+
+.final img {
+  width: 320px;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
@@ -85,22 +111,20 @@ button {
     <button id="yesBtn" onclick="yesClick()">Yes</button>
     <button id="noBtn"
       onmouseover="runAway()"
-      onmousemove="runAway()"
-      ontouchstart="runAway()"
       onclick="runAway()">
       No
     </button>
   </div>
 
-  <div class="final" id="finalMsg">
-    can I see the sun smiling ☀️
+  <div class="final" id="final">
+    <h1>can I see the sun smiling ☀️</h1>
+    <img src="https://media.giphy.com/media/FZuC4kSIAe7MTXyHuJ/giphy.gif">
   </div>
 
 </div>
 
 <script>
 let yesStage = 0;
-let speedBoost = 1;
 
 const yesTexts = [
   "Yes",
@@ -112,30 +136,25 @@ const yesTexts = [
 function runAway() {
   const noBtn = document.getElementById("noBtn");
 
-  const x = Math.random() * 220;
-  const y = Math.random() * 220;
+  const x = Math.random() * 360;
+  const y = Math.random() * 150;
 
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
-
-  // makes it feel more "alive" each time
-  speedBoost += 0.05;
-  noBtn.style.transition = `all ${0.2 / speedBoost}s ease`;
 }
 
 function yesClick() {
   const yesBtn = document.getElementById("yesBtn");
-  const question = document.getElementById("question");
 
   yesStage++;
 
   if (yesStage < yesTexts.length) {
     yesBtn.innerText = yesTexts[yesStage];
-    yesBtn.style.transform = "scale(" + (1 + yesStage * 0.25) + ")";
+    yesBtn.style.transform = "scale(" + (1 + yesStage * 0.2) + ")";
   } else {
     document.querySelector(".buttons").style.display = "none";
-    question.style.display = "none";
-    document.getElementById("finalMsg").style.display = "block";
+    document.getElementById("question").style.display = "none";
+    document.getElementById("final").style.display = "flex";
   }
 }
 </script>
