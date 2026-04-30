@@ -16,15 +16,18 @@ body {
 }
 
 .card {
-  width: 540px;
+  width: 560px;
   height: 420px;
   background: white;
   border-radius: 28px;
   box-shadow: 0 25px 70px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: relative;
   overflow: hidden;
   text-align: center;
-  padding-top: 60px;
 }
 
 h2 {
@@ -33,18 +36,18 @@ h2 {
   margin-bottom: 40px;
 }
 
-/* GAME AREA */
+/* BUTTON AREA */
 .area {
   width: 100%;
-  height: 250px;
+  height: 220px;
   position: relative;
 }
 
-/* YES fixed center */
+/* YES (centered, static until triggered) */
 #yesBtn {
   position: absolute;
   left: 50%;
-  top: 40%;
+  top: 50%;
   transform: translate(-50%, -50%) scale(1);
   background: #ff7aa2;
   color: white;
@@ -52,21 +55,21 @@ h2 {
   padding: 14px 22px;
   border-radius: 26px;
   cursor: pointer;
-  transition: transform 0.6s ease;
+  transition: transform 0.5s ease;
 }
 
-/* NO starts next to YES */
+/* NO (starts next to yes, static) */
 #noBtn {
   position: absolute;
   left: calc(50% + 90px);
-  top: 40%;
+  top: 50%;
   transform: translate(-50%, -50%);
   background: #e0e0e0;
   border: none;
   padding: 14px 22px;
   border-radius: 26px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.25s ease;
 }
 
 /* FINAL */
@@ -97,11 +100,8 @@ h2 {
   <h2 id="question">do you want to continue?</h2>
 
   <div class="area">
-    <button id="yesBtn" onclick="yesClick()">Yes</button>
-    <button id="noBtn"
-      onmouseover="runAway(this)">
-      No
-    </button>
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
   </div>
 
   <div class="final" id="final">
@@ -112,10 +112,15 @@ h2 {
 </div>
 
 <script>
-let yesStage = 0;
-let yesScale = 1;
-
 const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const area = document.querySelector(".area");
+const question = document.getElementById("question");
+const final = document.getElementById("final");
+
+let started = false;
+let yesScale = 1;
+let yesStage = 0;
 
 const yesTexts = [
   "Yes",
@@ -124,32 +129,38 @@ const yesTexts = [
   "Of course Yes"
 ];
 
-/* YES grows over time */
-setInterval(() => {
-  yesScale += 0.04;
-  yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
-}, 1200);
+/* ONLY START INTERACTION ON FIRST HOVER */
+noBtn.addEventListener("mouseenter", startGame);
 
-/* NO escapes properly */
-function runAway(btn) {
-  const area = document.querySelector(".area");
+function startGame() {
+  if (started) return;
+  started = true;
 
-  const maxX = area.clientWidth - 80;
-  const maxY = area.clientHeight - 60;
+  /* YES starts growing slowly */
+  setInterval(() => {
+    yesScale += 0.03;
+    yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
+  }, 900);
+
+  /* enable runaway behaviour */
+  noBtn.addEventListener("mouseenter", runAway);
+}
+
+/* smooth escape movement */
+function runAway() {
+  const maxX = area.clientWidth - 120;
+  const maxY = area.clientHeight - 80;
 
   const x = Math.random() * maxX;
   const y = Math.random() * maxY;
 
-  btn.style.left = x + "px";
-  btn.style.top = y + "px";
-
-  btn.style.transform = "scale(0.6)";
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+  noBtn.style.transform = "scale(0.6)";
 }
 
 /* YES progression */
-function yesClick() {
-  const question = document.getElementById("question");
-
+yesBtn.addEventListener("click", () => {
   yesStage++;
 
   if (yesStage < yesTexts.length) {
@@ -157,9 +168,9 @@ function yesClick() {
   } else {
     document.querySelector(".area").style.display = "none";
     question.style.display = "none";
-    document.getElementById("final").style.display = "flex";
+    final.style.display = "flex";
   }
-}
+});
 </script>
 
 </body>
